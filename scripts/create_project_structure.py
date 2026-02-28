@@ -1,35 +1,52 @@
-from pathlib import Path
+"""
+Lab-VC — Project Structure Initialization Script
 
-BASE_DIR = Path("lab-vc")
+This script creates the standard directory structure for the
+Lab-VC (Vision Computing Laboratory) project.
 
-structure = [
-    "notebooks",
-    "src/io",
-    "src/preprocessing",
-    "src/utils",
+IMPORTANT:
+- This script must be executed from the ROOT of the repository.
+- It does NOT create a new 'lab-vc' folder.
+- All directories are created relative to the current working directory.
+"""
+
+import os
+
+# List of directories to be created in the project root
+DIRECTORIES = [
     "data/raw",
     "data/processed",
     "docs",
-    "scripts"
+    "notebooks/phase_0",
+    "notebooks/phase_1",
+    "notebooks/phase_2",
+    "src/data",
+    "src/models",
+    "src/utils"
 ]
 
-files = {
-    "src/__init__.py": "",
-    "src/io/__init__.py": "",
-    "src/preprocessing/__init__.py": "",
-    "src/utils/__init__.py": "",
-    "data/README.md": "# Data directory\n\nDatasets não versionados.",
-    "README.md": "# Lab-VC — Laboratório de Visão Computacional",
-    "requirements.txt": "numpy\nopencv-python\nPillow\nmatplotlib\nscikit-image\ntqdm\n",
-    ".gitignore": "__pycache__/\n.ipynb_checkpoints/\ndata/raw/\ndata/processed/\n"
-}
+# List of files to be created in the project root
+FILES = [
+    "requirements.txt"
+]
 
-for folder in structure:
-    (BASE_DIR / folder).mkdir(parents=True, exist_ok=True)
+def create_directories():
+    """
+    Create project directories if they do not already exist.
+    """
+    for directory in DIRECTORIES:
+        os.makedirs(directory, exist_ok=True)
 
-for file, content in files.items():
-    file_path = BASE_DIR / file
-    file_path.parent.mkdir(parents=True, exist_ok=True)
-    file_path.write_text(content, encoding="utf-8")
+def create_files():
+    """
+    Create empty files if they do not already exist.
+    """
+    for file in FILES:
+        if not os.path.exists(file):
+            with open(file, "w") as f:
+                pass
 
-print("✅ Estrutura do Lab-VC criada com sucesso!")
+if __name__ == "__main__":
+    create_directories()
+    create_files()
+    print("Lab-VC project structure created successfully.")
